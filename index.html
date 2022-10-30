@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Ajax Api call by jQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+      $(document).ready(function() {
+	  
+	   $("button").click(function(){
+	 
+	 const surahs = [78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98, 99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114];
+	 const ayats = [40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6];
+	 let index_surah = Math.floor(Math.random() * 38);
+	 let num_of_ayahs = ayats[index_surah];
+	 let index_ayah = Math.floor((Math.random() * num_of_ayahs) + 1);
+	 
+        $.ajax({
+          url: "http://api.quran.com/api/v3/chapters/"+surahs[index_surah]+"/verses/"+index_ayah,
+          type: "GET",
+          success: function(response) {
+		  console.log(response);
+		  $('#ayah_id').val(response.verse.text_indopak);
+		 
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+	
+	 });
+      });
+    </script>
+  </head>
+  <body>
+  
+  <img src="bs.png" alt="بسم الله الرحمن الرحيم" width="200" height="200">
+  <br/><br/> 
+  
+  <button type="button">Generate a randon ayah from Juz Emma</button>
+  <br/><br/>
+  
+  <input readonly  style="font-size:30px;" type="text"   value = ""  id = "ayah_id"  > 
+		
+  </body>
+</html>
