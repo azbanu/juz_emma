@@ -51,7 +51,7 @@
 	 let num_of_ayahs = ayats[index_surah];
 	 let question = "";
 	 let answer = "";
-	
+	$('#answer_id').hide()
 	 $.ajax({
           url: "https://api.quran.com/api/v3/chapters/"+surahs[index_surah]+"/verses/"+num_of_ayahs,
           type: "GET",
@@ -146,7 +146,7 @@
 	</div>
     <div class="panel-body">
 		  <div id="question_text_id" style= "font-size: 20px;"/>
-		  </br></br>
+		  
 		  
 	</div>
 	
@@ -155,7 +155,7 @@
 <div id="answer_id" style= "font-size: 20px;!important; display: none"/>
 </div>
 </div>
-<p>Ordering or surahs</p>
+<p>Ordering of surahs</p>
 	  
 </div>
 
