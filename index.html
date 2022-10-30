@@ -1,25 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Ajax Api call by jQuery</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <title>Juz Emma</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+	
+	 <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Add a gray background color and some padding to the footer */
+    footer {
+      background-color: #f2f2f2;
+      padding: 25px;
+    }
+  </style>
+
     <script>
-      $(document).ready(function() {
-	  
-	   $("button").click(function(){
-	 
+    $(document).ready(function() {
 	 const surahs = [78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98, 99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114];
 	 const ayats = [40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6];
-	 let index_surah = Math.floor(Math.random() * 38);
+	  
+	 $('#generate_id').click(function(){
+     let index_surah = Math.floor(Math.random() * 38);
 	 let num_of_ayahs = ayats[index_surah];
 	 let index_ayah = Math.floor((Math.random() * num_of_ayahs) + 1);
-	 
-        $.ajax({
-          url: "http://api.quran.com/api/v3/chapters/"+surahs[index_surah]+"/verses/"+index_ayah,
+	 $.ajax({
+          url: "https://api.quran.com/api/v3/chapters/"+surahs[index_surah]+"/verses/"+index_ayah,
           type: "GET",
           success: function(response) {
 		  console.log(response);
-		  $('#ayah_id').val(response.verse.text_indopak);
+		  $('#ayah_id').text(response.verse.text_indopak);
+		 
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+	 });
+	 
+	 
+	 $('#next_surah_id').click(function(){
+     let index_surah = Math.floor(Math.random() * 38);
+	 let num_of_ayahs = ayats[index_surah];
+	 let question = "";
+	 let answer = "";
+	
+	 $.ajax({
+          url: "https://api.quran.com/api/v3/chapters/"+surahs[index_surah]+"/verses/"+num_of_ayahs,
+          type: "GET",
+          success: function(response) {
+		  console.log(response);
+		  $('#question_text_id').text(response.verse.text_indopak);
 		 
           },
           error: function(error) {
@@ -27,19 +65,104 @@
           }
         });
 	
+	 
+	
+	 $.ajax({
+          url: "https://api.quran.com/api/v3/chapters/"+surahs[index_surah+1]+"/verses/1",
+          type: "GET",
+          success: function(response) {
+		  console.log(response);
+		  $('#answer_id').text(response.verse.text_indopak);
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
 	 });
+	 
       });
-    </script>
+ 
+	  </script>
   </head>
   <body>
-  
-  <img src="bs.png" alt="بسم الله الرحمن الرحيم" width="200" height="200">
-  <br/><br/> 
-  
-  <button type="button">Generate a randon ayah from Juz Emma</button>
-  <br/><br/>
-  
-  <input readonly  style="font-size:30px;" type="text"   value = ""  id = "ayah_id"  > 
-		
+  <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#"></a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+        <li><a href="#"></a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="jumbotron">
+  <div class="container text-center">
+    <h2>Generate a randon ayah from Juz Emma</h2>      
+    <img  class="img-thumbnail" src="bs.png" alt="بسم الله الرحمن الرحيم" >
+  </div>
+</div>
+
+
+
+
+<div style= "margin-left:10%">
+<div class="row">
+<div class="col-xs-6 col-md-4">
+<div class="panel panel-default">
+     
+    <div class="panel-heading">  <button id="generate_id" class="btn btn-info" type="button">Generate</button></div>
+    <div class="panel-body">
+		<div id="ayah_id" style="font-size: 20px !important;" />
+	</div>
+</div>
+</div>
+<p>Generate random ayah</p>
+</div>
+
+
+
+
+<div class="row">
+<div class="col-xs-6 col-md-4">
+<div class="panel panel-default">
+    <div class="panel-heading">  
+	 <button id="next_surah_id" class="btn btn-info" type="button">Question</button>
+   <button id="next_surah" class="btn btn-info" onClick="$('#answer_id').show();" type="button">Answer</button>
+	
+	</div>
+    <div class="panel-body">
+		  <div id="question_text_id" style= "font-size: 20px;"/>
+		  </br></br>
+		  
+	</div>
+	
+</div>
+<hr/>
+<div id="answer_id" style= "font-size: 20px;!important; display: none"/>
+</div>
+</div>
+<p>Ordering or surahs</p>
+	  
+</div>
+
+
+
+
+
+
   </body>
 </html>
