@@ -36,7 +36,7 @@
           type: "GET",
           success: function(response) {
 		  console.log(response);
-		  $('#ayah_id').text(response.verse.text_indopak);
+		  $('#ayah_id').text(response.verse.text_madani);
 		 
           },
           error: function(error) {
@@ -57,7 +57,7 @@
           type: "GET",
           success: function(response) {
 		  console.log(response);
-		  $('#question_text_id').text(response.verse.text_indopak);
+		  $('#question_text_id').text(response.verse.text_madani);
 		 
           },
           error: function(error) {
@@ -72,7 +72,7 @@
           type: "GET",
           success: function(response) {
 		  console.log(response);
-		  $('#answer_id').text(response.verse.text_indopak);
+		  $('#answer_id').text(response.verse.text_madani);
           },
           error: function(error) {
             console.log(error);
