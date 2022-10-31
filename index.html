@@ -30,9 +30,10 @@
 	 $('#generate_id').click(function(){
      let index_surah = Math.floor(Math.random() * 38);
 	 let num_of_ayahs = ayats[index_surah];
-	 let index_ayah = Math.floor((Math.random() * num_of_ayahs) + 1);
+	 let ayah_number = Math.floor((Math.random() * num_of_ayahs) + 1);
+	 $('#gen_answer_id').hide()
 	 $.ajax({
-          url: "https://api.quran.com/api/v3/chapters/"+surahs[index_surah]+"/verses/"+index_ayah,
+          url: "https://api.quran.com/api/v3/chapters/"+surahs[index_surah]+"/verses/"+ayah_number,
           type: "GET",
           success: function(response) {
 		  console.log(response);
@@ -43,6 +44,23 @@
             console.log(error);
           }
         });
+		
+		 let surah_ayah_number = " (" + surahs[index_surah] + ":" + (ayah_number+1) + ")";
+		 
+		$.ajax({
+          url: "https://api.quran.com/api/v3/chapters/"+surahs[index_surah]+"/verses/"+ (ayah_number+1),
+          type: "GET",
+          success: function(response) {
+		  console.log(response);
+		  $('#gen_answer_id').text(response.verse.text_madani + surah_ayah_number) ;
+		 
+          },
+          error: function(error) {
+            console.log(error);
+          }
+        });
+		
+		
 	 });
 	 
 	 
@@ -121,14 +139,22 @@
 
 <div style= "margin-left:10%">
 <div class="row">
-<div class="col-xs-6 col-md-4">
+<div class="col-xs-6 col-md-5">
 <div class="panel panel-default">
      
-    <div class="panel-heading">  <button id="generate_id" class="btn btn-info" type="button">Generate</button></div>
+    <div class="panel-heading">  
+	<button id="generate_id" class="btn btn-info" type="button">Generate</button>
+	<button id="generate_anw_button" class="btn btn-info" onClick="$('#gen_answer_id').show();" type="button">Answer</button>
+	</div>
     <div class="panel-body">
-		<div id="ayah_id" dir="rtl" lang="ar" style="font-size: 20px !important;" />
+		<div id="ayah_id" dir="rtl" lang="ar" style="font-size: 25px !important;" />
 	</div>
 </div>
+
+<hr/>
+<div id="gen_answer_id" dir="rtl" lang="ar" style="font-size: 25px !important; display: none"/>
+</div>
+
 </div>
 <p>Generate random ayah</p>
 </div>
@@ -137,22 +163,22 @@
 
 
 <div class="row">
-<div class="col-xs-6 col-md-4">
+<div class="col-xs-6 col-md-5">
 <div class="panel panel-default">
     <div class="panel-heading">  
 	 <button id="next_surah_id" class="btn btn-info" type="button">Question</button>
-   <button id="next_surah" class="btn btn-info" onClick="$('#answer_id').show();" type="button">Answer</button>
+     <button id="next_surah" class="btn btn-info" onClick="$('#answer_id').show();" type="button">Answer</button>
 	
 	</div>
     <div class="panel-body">
-		  <div id="question_text_id" dir="rtl" lang="ar" style= "font-size: 20px;"/>
+		  <div id="question_text_id" dir="rtl" lang="ar" style= "font-size: 25px;"/>
 		  
 		  
 	</div>
 	
 </div>
 <hr/>
-<div id="answer_id" dir="rtl" lang="ar" style= "font-size: 20px;!important; display: none"/>
+<div id="answer_id" dir="rtl" lang="ar" style="font-size: 25px !important; display: none"/>
 </div>
 </div>
 <p>Ordering of surahs</p>
