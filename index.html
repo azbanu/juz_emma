@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Juz Emma</title>
@@ -8,115 +7,10 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 	
-	 <style>
-    /* Remove the navbar's default margin-bottom and rounded borders */ 
-    .navbar {
-      margin-bottom: 0;
-      border-radius: 0;
-    }
-    
-    /* Add a gray background color and some padding to the footer */
-    footer {
-      background-color: #f2f2f2;
-      padding: 25px;
-    }
-  </style>
 
-    <script>
-    $(document).ready(function() {
-	 const surahs = [78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98, 99,100,101,102,103,104,105,106,107,108,109,110,111,112,113,114];
-	 const ayats = [40,46,42,29,19,36,25,22,17,19,26,30,20,15,21,11,8,8,19,5,8,8,11,11,8,3,9,5,4,7,3,6,3,5,4,5,6];
-      
-	 
-	 $('#generate_id').click(function(){
-	 
-	 // generate randon surah
-	 const index_surah = Math.floor(Math.random() * 38);
-	 let surah_number = surahs[index_surah];
-	 
-	 // generate randon ayah
-	 const num_of_ayahs = ayats[index_surah];
-	 const ayah_number = Math.floor((Math.random() * num_of_ayahs) + 1);	 
-	 
-	 $('#gen_answer_id').hide()
-	 $.ajax({
-          url: "https://api.quran.com/api/v3/chapters/"+surah_number+"/verses/"+ayah_number,
-          type: "GET",
-          success: function(response) {
-		  console.log(response);
-		  $('#ayah_id').text(response.verse.text_madani);
-		 
-          },
-          error: function(error) {
-            console.log(error);
-          }
-        });
-		
-		 let next_ayah_number = ayah_number+1;	 
-		 
-		 if (ayah_number == num_of_ayahs )
-		 {  
-		     surah_number = surahs[index_surah+1];
-			 next_ayah_number = 1;
-		 }
-		 
-	   
-		 let next_surah_ayah_number_text = " (" + surah_number + ":" + next_ayah_number + ")";
-	  
-		$.ajax({
-          url: "https://api.quran.com/api/v3/chapters/"+surah_number+"/verses/"+ next_ayah_number,
-          type: "GET",
-          success: function(response) {
-		  console.log(response);
-		  $('#gen_answer_id').text(response.verse.text_madani + next_surah_ayah_number_text) ;
-		 
-          },
-          error: function(error) {
-            console.log(error);
-          }
-        });
-		
-		
-	 });
-	 
-	 
-	 $('#next_surah_id').click(function(){
-     let index_surah = Math.floor(Math.random() * 38);
-	 let num_of_ayahs = ayats[index_surah];
-	 let question = "";
-	 let answer = "";
-	$('#answer_id').hide()
-	 $.ajax({
-          url: "https://api.quran.com/api/v3/chapters/"+surahs[index_surah]+"/verses/"+num_of_ayahs,
-          type: "GET",
-          success: function(response) {
-		  console.log(response);
-		  $('#question_text_id').text(response.verse.text_madani);
-		 
-          },
-          error: function(error) {
-            console.log(error);
-          }
-        });
+
+    <script src="random_surah.js"></script> 
 	
-	 
-	
-	 $.ajax({
-          url: "https://api.quran.com/api/v3/chapters/"+surahs[index_surah+1]+"/verses/1",
-          type: "GET",
-          success: function(response) {
-		  console.log(response);
-		  $('#answer_id').text(response.verse.text_madani);
-          },
-          error: function(error) {
-            console.log(error);
-          }
-        });
-	 });
-	 
-      });
- 
-	  </script>
   </head>
   <body>
   <nav class="navbar navbar-inverse">
@@ -156,6 +50,54 @@
 <div style= "margin-left:10%">
 <div class="row">
 <div class="col-xs-6 col-md-5">
+
+
+<div class="form-group">
+      <label for="sel1">Select a surah</label>	
+<select class="form-control" id="surah_option">	  
+<option value="-1">All surahs</option>
+<option value="0">An-Naba’ (the Great News)</option>
+<option value="1">An-Nazi’at (Those Who Pull Out)</option>
+<option value="2">‘Abasa (He Frowned)</option>
+<option value="3">At-Takwir (the Overthrowing)</option>
+<option value="4">Al-Infitar (the Cleaving)</option>
+<option value="5">Al-Mutaffifin (Those Who Deal in Fraud)</option>
+<option value="6">Al-Inshiqaq (the Splitting Asunder)</option>
+<option value="7">Al-Buruj (the Stars)</option>
+<option value="8">At-Tariq (the Nightcomer)</option>
+<option value="9">Al-A’la (the Most High)</option>
+<option value="10">Al-Ghashiyah (the Overwhelming)</option>
+<option value="11">Al-Fajr (the Dawn)</option>
+<option value="12">Al-Balad (the City)</option>
+<option value="13">Ash-Shams (the Sun)</option>
+<option value="14">Al-Layl (the Night)</option>
+<option value="15">Adh-Dhuha (the Forenoon)</option>
+<option value="16">Al-Inshirah (the Opening Forth)</option>
+<option value="17">At-Tin (the Fig)</option>
+<option value="18">Al-‘Alaq (the Clot)</option>
+<option value="19">Al-Qadar (the Night of Decree)</option>
+<option value="20">Al-Bayinah (the Proof)</option>
+<option value="21">Az-Zalzalah (the Earthquake)</option>
+<option value="22">Al-‘Adiyah (the Runners)</option>
+<option value="23">Al-Qari’ah (the Striking Hour)</option>
+<option value="24">At-Takathur (the Piling Up)</option>
+<option value="25">Al-‘Asr (the Time)</option>
+<option value="26">Al-Humazah (the Slanderer)</option>
+<option value="27">Al-Fil (the Elephant)</option>
+<option value="28">Quraish (Quraish)</option>
+<option value="29">Al-Ma’un (the Assistance)</option>
+<option value="30">Al-Kauthar (the River of Abundance)</option>
+<option value="31">Al-Kafirun (the Disbelievers)</option>
+<option value="32">An-Nasr (the Help)</option>
+<option value="33">Al-Masad (the Palm Fiber)</option>
+<option value="34">Al-Ikhlas (the Sincerity)</option>
+<option value="35">Al-Falaq (the Daybreak)</option>
+<option value="36">An-Nas (Mankind)</option>
+</select>
+</div>
+
+
+
 <div class="panel panel-default">
      
     <div class="panel-heading">  
@@ -200,10 +142,6 @@
 <p>Ordering of surahs</p>
 	  
 </div>
-
-
-
-
 
 
   </body>
