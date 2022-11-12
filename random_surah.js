@@ -32,15 +32,20 @@
           }
         });
 		
-		 let next_ayah_number = randon_ayah_number+1;	 
+        if (surah_number == 114 && randon_ayah_number ==  6 ) // no next ayah 
+		 {  
+		     $('#gen_answer_id').text("End of Juz Amma") ;
+			 return;
+		 }		
+
+		let next_ayah_number = randon_ayah_number+1;	 
 		 
 		 if (randon_ayah_number == num_of_ayahs )
 		 {  
 		    surah_number = surahs[(parseInt(index_surah)+1)];
-			 next_ayah_number = 1;
+			next_ayah_number = 1;
 		 }
-		 
-	   
+		
 		 let next_surah_ayah_number_text = " (" + surah_number + ":" + next_ayah_number + ")";
 	  
 		$.ajax({
@@ -80,6 +85,11 @@
         });
 	
 	 
+	 if (surahs[index_surah] == 114)
+		 {  
+	      $('#answer_id').text("End of Juz Amma") ;
+			 return;
+		 }
 	
 	 $.ajax({
           url: "https://api.quran.com/api/v3/chapters/"+surahs[index_surah+1]+"/verses/1",
@@ -88,7 +98,7 @@
 		  console.log(response);
 		  $('#answer_id').text(response.verse.text_madani);
           },
-          error: function(error) {
+           error: function(error) {
             console.log(error);
           }
         });
